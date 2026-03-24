@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-03-24 21:14:03",
+  "event": "SubagentStop",
+  "agent_type": "budgex-backend",
+  "status": "BLOCKED",
+  "summary": "Réponse spécialiste bloquée : sections obligatoires absentes.",
+  "missing_sections": [
+    "STATUS",
+    "SUMMARY",
+    "FILES",
+    "COMMANDS",
+    "VALIDATION",
+    "RISKS",
+    "HANDOFF",
+    "MEMORY_CANDIDATES",
+    "CHECKLIST_RESULTS",
+    "REFERENCES_USED"
+  ],
+  "semantic_errors": [],
+  "semantic_warnings": []
+}

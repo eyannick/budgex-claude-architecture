@@ -1,0 +1,280 @@
+[
+  {
+    "id": "eval-001",
+    "description": "Requête backend pure — ajout d'une entité",
+    "input": "Ajoute une entité Tag avec une relation ManyToMany vers Budget",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["backend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "must_not_contain": ["frontend", "seo"]
+    }
+  },
+  {
+    "id": "eval-002",
+    "description": "Requête frontend pure — correction responsive",
+    "input": "Le tableau des transactions est illisible sur mobile",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["frontend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT"],
+      "must_not_contain": ["backend", "migration"]
+    }
+  },
+  {
+    "id": "eval-003",
+    "description": "Requête multi-stream — feature avec backend + frontend",
+    "input": "Ajoute un champ 'note' sur les transactions, visible dans le tableau de bord",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["backend", "frontend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "sequence": "backend_before_frontend"
+    }
+  },
+  {
+    "id": "eval-004",
+    "description": "Requête sécurité — profil deep obligatoire",
+    "input": "Modifie le Voter BudgetVoter pour autoriser les admins à voir tous les budgets",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["backend"],
+      "profile": "deep",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "BLOCKERS"],
+      "qa_required": true
+    }
+  },
+  {
+    "id": "eval-005",
+    "description": "Requête SEO — optimisation page publique",
+    "input": "La page d'accueil n'a pas de meta description",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["seo"],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_contain": ["backend", "migration"]
+    }
+  },
+  {
+    "id": "eval-006",
+    "description": "Requête NO_DELEGATE — explication architecture",
+    "input": "Explique-moi pourquoi on utilise des Voters plutôt que des annotations IsGranted",
+    "expected": {
+      "routing_category": "NO_DELEGATE",
+      "streams": [],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_delegate": true
+    }
+  },
+  {
+    "id": "eval-007",
+    "description": "Requête vague — réponse cadrée sans sur-orchestration",
+    "input": "Améliore le dashboard",
+    "expected": {
+      "routing_category": "NO_DELEGATE",
+      "streams": [],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_delegate": true
+    }
+  },
+  {
+    "id": "eval-008",
+    "description": "Requête QA — validation avant merge",
+    "input": "Valide tout avant que je fasse le merge de la feature branch",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["qa"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "BLOCKERS"]
+    }
+  },
+  {
+    "id": "eval-009",
+    "description": "Scope drift test — backend ne doit pas toucher templates/",
+    "input": "Ajoute une méthode getTotalDepenses() sur l'entité Budget",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["backend"],
+      "scope_in_must_not_contain": ["templates/", "assets/", "public/css"],
+      "scope_in_must_contain": ["src/Entity/Budget.php"]
+    }
+  },
+  {
+    "id": "eval-010",
+    "description": "Memory drift test — une info transitoire ne doit pas aller en mémoire",
+    "input": "Renomme la variable $budgets en $userBudgets dans BudgetController",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["backend"],
+      "profile": "fast",
+      "memory_candidates_must_be_empty": true
+    }
+  },
+  {
+    "id": "eval-011",
+    "description": "Macro utilisateur — `fin de session, bonne nuit` déclenche la clôture Git propre",
+    "input": "fin de session, bonne nuit",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["qa"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "BLOCKERS"]
+    }
+  },
+  {
+    "id": "eval-012",
+    "description": "Directive persistante — règle à propager à tous les agents et sous-agents",
+    "input": "À partir de maintenant, chaque méthode PHP publique doit avoir un commentaire docblock. Cette règle s'applique à tous les agents et sous-agents.",
+    "expected": {
+      "routing_category": "NO_DELEGATE",
+      "streams": [],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "ACTIONS", "RESULT"],
+      "must_not_delegate": true
+    }
+  },
+  {
+    "id": "eval-013",
+    "description": "Memory governance — le spécialiste propose via MEMORY_CANDIDATES, l'orchestrateur est seul à écrire",
+    "input": "Le spécialiste backend a proposé d'enregistrer en mémoire que la baseline PHPUnit est désormais 185 tests / 530 assertions. Valide et enregistre.",
+    "expected": {
+      "routing_category": "NO_DELEGATE",
+      "streams": [],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "project-context"],
+      "must_not_delegate": true,
+      "memory_write_target": "memory/project-context.md",
+      "memory_write_must_be_orchestrator_only": true
+    }
+  },
+  {
+    "id": "eval-014",
+    "description": "SEO sur zone privée — noindex intentionnel sur /app/ doit être signalé, pas retiré",
+    "input": "Corrige les balises meta et le canonical de la page /app/dashboard",
+    "expected": {
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_contain": ["remove noindex", "index public"],
+      "must_not_streams": ["database", "finance"]
+    }
+  },
+  {
+    "id": "eval-015",
+    "description": "Séquence finance → backend — nouvelle règle métier comptable à implémenter",
+    "input": "Les virements entre comptes de même devise ne doivent pas appliquer de commission. Implémente cette règle.",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["finance", "backend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "sequence": "finance_before_backend"
+    }
+  },
+  {
+    "id": "eval-016",
+    "description": "Conflit multi-stream — même fichier template touché par backend et frontend, séquencement obligatoire",
+    "input": "Ajoute un champ IBAN sur l'utilisateur et affiche-le dans la page profil",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["backend", "frontend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "sequence": "backend_before_frontend",
+      "no_parallel": true
+    }
+  },
+  {
+    "id": "eval-017",
+    "description": "Faux positif QA — mot `test` dans une requête SEO ne doit pas déclencher le stream QA",
+    "input": "Teste si le canonical de la page d'accueil est bien reconnu par les moteurs de recherche",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["seo"],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_contain": ["phpunit", "phpstan", "couverture"],
+      "must_not_streams": ["qa"]
+    }
+  },
+  {
+    "id": "eval-018",
+    "description": "Performance DB — ajout d'index pour accélérer une liste lente",
+    "input": "La liste des transactions est très lente sur les comptes qui ont beaucoup d'entrées",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["database"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "RESULT", "index"],
+      "must_not_contain": ["phpunit", "phpstan"],
+      "must_not_streams": ["qa", "backend"]
+    }
+  },
+  {
+    "id": "eval-019",
+    "description": "Modélisation DB — choix entre colonne JSON et table relationnelle",
+    "input": "Faut-il stocker les préférences utilisateur dans une colonne JSON ou dans une table dédiée ?",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["database"],
+      "profile": "fast",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_contain": ["migration", "phpunit"]
+    }
+  },
+  {
+    "id": "eval-020",
+    "description": "Migration destructive — renommage de colonne, profil deep et QA obligatoires",
+    "input": "La migration pour renommer la colonne `amount` en `amount_cents` sur la table transaction est prête. Valide-la avant déploiement.",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["database", "qa"],
+      "profile": "deep",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "BLOCKERS"],
+      "sequence": "database_before_qa",
+      "qa_required": true
+    }
+  },
+  {
+    "id": "eval-021",
+    "description": "Séquence finance → database → backend — invariant comptable avec impact schéma",
+    "input": "Modélise correctement le débit et le crédit d'un virement entre deux comptes dans la base de données.",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["finance", "database", "backend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "sequence": "finance_before_database_before_backend"
+    }
+  },
+  {
+    "id": "eval-022",
+    "description": "Multi-stream database → backend — contrainte DB suivie d'implémentation applicative",
+    "input": "Ajoute une contrainte pour interdire les montants négatifs sur les transactions de type dépense, et applique la validation côté Symfony.",
+    "expected": {
+      "routing_category": "MULTI_STREAM",
+      "streams": ["database", "backend"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "PLAN", "RESULT", "NEXT_STEP"],
+      "sequence": "database_before_backend"
+    }
+  },
+  {
+    "id": "eval-023",
+    "description": "Tuning requête repository — optimisation sans toucher la logique métier",
+    "input": "La méthode TransactionRepository::findByAccountWithFilters() fait plusieurs JOINs et devient lente. Optimise-la.",
+    "expected": {
+      "routing_category": "SINGLE_STREAM",
+      "streams": ["database"],
+      "profile": "safe",
+      "must_contain": ["ROUTING_DECISION", "RESULT"],
+      "must_not_contain": ["phpunit"],
+      "scope_in_must_contain": ["src/Repository/TransactionRepository.php"],
+      "must_not_streams": ["backend"]
+    }
+  }
+]

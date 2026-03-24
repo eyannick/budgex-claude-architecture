@@ -1,0 +1,190 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "WAMP_ROOT": "C:/wamp64/www",
+    "PROJECTS_ROOT": "C:/wamp64/www/projects",
+    "VSCODE_CMD": "D:/Logiciels/Microsoft VS Code/bin/code.cmd",
+    "GH_PATH": "/c/Program Files/GitHub CLI"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(test:*)",
+      "Bash(xargs:*)",
+      "Bash(du:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(php:*)",
+      "Bash(composer:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(python:*)",
+      "Bash(powershell:*)",
+      "Bash(pwsh:*)",
+      "Bash(where:*)",
+      "Bash(winget:*)",
+      "Read(C:/wamp64/www/projects/budgex/**)",
+      "Read(C:/Users/Utilisateur/.vscode/**)",
+      "Read(C:/Users/Utilisateur/AppData/Roaming/Code/User/**)",
+      "Bash(for f:*)",
+      "Bash(sed:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:support.ynab.com)",
+      "WebFetch(domain:docs.ynab.com)",
+      "WebFetch(domain:youneedabudget.com)",
+      "WebFetch(domain:www.ynab.com)",
+      "WebFetch(domain:app.ynab.com)",
+      "WebFetch(domain:developer.ynab.com)",
+      "WebFetch(domain:help.revolut.com)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:plainenglishaccounting.com)",
+      "WebFetch(domain:www.gnucash.org)",
+      "WebFetch(domain:actualbudget.org)",
+      "WebFetch(domain:stackoverflow.com)",
+      "WebFetch(domain:hledger.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.firefly-iii.org)",
+      "WebFetch(domain:docs.firefly-iii.org)",
+      "WebFetch(domain:finary.com)",
+      "WebFetch(domain:api.firefly-iii.org)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:help.bankin.com)",
+      "WebFetch(domain:www.reddit.com)",
+      "WebFetch(domain:help.copilot.money)",
+      "WebFetch(domain:lunchmoney.app)",
+      "WebFetch(domain:linxo.com)",
+      "WebFetch(domain:www.budgetbakers.com)",
+      "WebFetch(domain:help.walletapp.me)",
+      "Bash(cmd /c \"php bin/phpunit --no-coverage 2>&1\")",
+      "Bash(cmd /c \"cd /d C:\\\\wamp64\\\\www\\\\projects\\\\budgex && php bin\\\\phpunit --no-coverage\")",
+      "Bash(mysql:*)",
+      "Bash(python3:*)",
+      "Bash(\"C:/wamp64/bin/mysql/mysql8.0.31/bin/mysql.exe\" -u root --password=\"\" budgex -e \"SELECT table_name FROM information_schema.tables WHERE table_schema = 'budgex' ORDER BY table_name;\" 2>&1)",
+      "Bash(MYSQL=\"/c/wamp64/bin/mysql/mysql9.1.0/bin/mysql.exe\")",
+      "Bash(\"$MYSQL\" -u root --password=\"\" budgex -e \"SELECT table_name FROM information_schema.tables WHERE table_schema = ''budgex'' ORDER BY table_name;\")",
+      "Bash(for table:*)",
+      "Bash(do)",
+      "Bash(\"$MYSQL\" -u root --password=\"\" budgex -e \"SHOW CREATE TABLE \\\\`$table\\\\`\\\\G\")",
+      "Bash(done)",
+      "Bash(\"$MYSQL\" -u root --password=\"\" budgex -e \":*)",
+      "Bash(__NEW_LINE_3937fe847c2f04b6__ echo:*)",
+      "Bash(\"$MYSQL\" -u root --password=\"\" budgex -e \"SELECT version, executed_at FROM doctrine_migration_versions ORDER BY executed_at DESC LIMIT 10;\")",
+      "Bash(__NEW_LINE_46dcdc14224753fa__ echo:*)",
+      "Bash(\"$MYSQL\" -u root --password=\"\" budgex -e \"SHOW INDEX FROM \\\\`transaction\\\\`;\")",
+      "Bash(\"C:/wamp64/bin/mysql/mysql9.1.0/bin/mysql.exe\" -u root --password=\"\" budgex -e \"SHOW INDEX FROM \\\\`transaction\\\\` WHERE Key_name LIKE 'idx_tx%'\\\\G\" 2>&1)",
+      "Bash(cmd /c \"C:\\\\wamp64\\\\www\\\\projects\\\\budgex\\\\ops\\\\purge-notifications.bat\")",
+      "Bash(cmd //c \"C:\\\\\\\\wamp64\\\\\\\\www\\\\\\\\projects\\\\\\\\budgex\\\\\\\\ops\\\\\\\\purge-notifications.bat\")",
+      "Bash(C:/wamp64/bin/php/php8.3.14/php.exe bin/console app:purge-read-notifications --env=dev --no-debug)",
+      "Bash(schtasks:*)",
+      "Bash(APP_ENV=test php bin/console doctrine:migrations:migrate --no-interaction)",
+      "Bash(cd:*)",
+      "Bash(for q:*)",
+      "Bash(php bin/console doctrine:query:sql \"INSERT INTO goal \\(user_id, name, target_amount, current_amount, status, created_at, updated_at\\) VALUES \\(1, ''''test'''', 100, 0, ''''invalid_status'''', NOW\\(\\), NOW\\(\\)\\)\")",
+      "Bash(1 git:*)",
+      "Bash(head -10 grep -n \"ORM.Index\\\\|ORM.Table\" src/Entity/Account.php)",
+      "Bash(head -10 echo \"---\" grep -n \"ORM.Index\\\\|ORM.Table\" src/Entity/LoginHistory.php)",
+      "Bash(APP_ENV=test php bin/phpunit tests/Domain/Budget/ --testdox)",
+      "Bash(APP_ENV=test php bin/phpunit)",
+      "Bash(APP_ENV=test php bin/phpunit tests/Domain/Account/InterestProjectionTest.php --testdox)",
+      "Bash(APP_ENV=test php bin/phpunit tests/Domain/Transaction/ --testdox)",
+      "Bash(node -e \":*)",
+      "Skill(update-config)",
+      "Bash(APP_ENV=test php bin/phpunit --no-coverage)",
+      "WebFetch(domain:docs.powens.com)",
+      "Bash(TOKEN=\"YQMaZwql3cyAxvTndkrKnBtWWsqxkrws0U36Q/2cH8qxKks4R0JRw6jYUp0AsebYALQWk7_lP4S0ruQy90L6VPk/7WCgPBrI4TyIDIByfOgpZBL7pN9MYMip5_FPAey_\")",
+      "Bash(__NEW_LINE_2bcb064905f4e7e2__ echo:*)",
+      "Bash(php -r \":*)",
+      "Bash(php -r \"echo ''''GD: '''' . \\(extension_loaded\\(''''gd''''\\) ? ''''oui'''' : ''''non''''\\) . PHP_EOL;\")",
+      "Bash(TOKEN=\"DsYIIItvbGASZQAvIwruAusgXTi283D42/kVaSJ0Fg6jCvGaD_3yvrilxm/fs4yWS6g7vj1jJ7CMzYge4gJn1VcCnU72zypc9O6zYjQ9aXsW5w/InqhTBA6yOcya_2hr\")",
+      "Bash(DOMAIN=\"budgex-sandbox\")",
+      "Bash(BASE=\"https://$DOMAIN.biapi.pro/2.0\" echo \"=== GET /users/me/connections/6/accounts ===\" curl -s -H \"Authorization: Bearer $TOKEN\" \"$BASE/users/me/connections/6/accounts\")",
+      "Bash(BASE=\"https://$DOMAIN.biapi.pro/2.0\" echo \"=== GET /users/me/accounts/36/transactions?limit=2 ===\" curl -s -H \"Authorization: Bearer $TOKEN\" \"$BASE/users/me/accounts/36/transactions?limit=2\")",
+      "Bash(BASE=\"https://$DOMAIN.biapi.pro/2.0\" echo \"=== /connectors/1 \\(connecteur Crédit Mutuel complet\\) ===\" curl -s -H \"Authorization: Bearer $TOKEN\" \"$BASE/connectors/fc6e059f-c3e6-52d7-8139-6e5e0297fe24\")",
+      "Bash(grep -h \"^\\\\s*#\\\\[Route\" /c/wamp64/www/projects/budgex/src/Controller/*.php)"
+    ],
+    "deny": [
+      "Bash(php bin/console doctrine:schema:update --force:*)",
+      "Bash(rm -rf C:/Windows:*)",
+      "Bash(rm -rf C:/wamp64/www/projects:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/reference_freshness.py"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/pre_tool_use_guard.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/post_tool_use_failure_hint.py"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/session_close_trigger.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/quality_gate.py --event Stop"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/quality_gate.py --event SubagentStop"
+          }
+        ]
+      }
+    ]
+  }
+}
