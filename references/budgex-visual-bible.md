@@ -258,6 +258,48 @@ Structure obligatoire : *(back ronde) → eyebrow violet → titre H1 → sous-t
 - `--flush` : header sur fond `--bx-app-bg`, sans border-bottom — quand une card hero patrimoine suit immédiatement.
 - `--simple` : eyebrow + titre seuls, pas de sous-titre ni d'action — pages admin et paramètres.
 
+### Largeur des sections par type de page — ADR-016
+
+La largeur d'une card ou section est décidée par l'**usage utilisateur**, pas par une convention de grille uniforme.
+
+#### Principe directeur
+
+| Usage | Largeur |
+|---|---|
+| Scanner / comparer / gérer | Full-width (`col-12`) |
+| Analyser deux blocs complémentaires | Grille (`8/4`, `7/5`, `6/6`) |
+| Lire / saisir / configurer | Largeur contrainte (`col-lg-8`, `max-width 720–900 px`) |
+
+#### Pages opérationnelles → full-width
+
+Exemples : Comptes · Transactions · À traiter · Règles automatiques · Budgets · Admin utilisateurs.
+
+- La surface principale (liste / table / feed) prend toute la largeur utile : `col-12` ou équivalent.
+- Ne pas contraindre en `col-lg-8` ou `col-lg-10` si cela réduit la lisibilité du tableau.
+- Une colonne secondaire n'est autorisée que si elle porte une information distincte et utile (filtre persistant, résumé latéral). Jamais décorative.
+
+#### Pages analytiques → full-width ou grille justifiée
+
+Exemples : Budget analyse · Cashflow · Patrimoine · Dashboard.
+
+- Les sections structurantes (hero, KPI, graphique principal) peuvent être full-width.
+- Les grilles `8/4`, `7/5`, `6/6` sont autorisées uniquement si les deux blocs sont complémentaires et lus simultanément.
+- Interdiction de créer une colonne secondaire vide ou purement décorative.
+
+#### Pages formulaire / paramètres / lecture → largeur contrainte
+
+Exemples : Profil · Création / édition de ressource · Paramètres · Pages légales · Contenus textuels.
+
+- Utiliser une largeur contrainte pour préserver la lisibilité : `col-lg-8`, `col-xl-7`, ou `max-width` 720–900 px selon le volume de contenu.
+- Les formulaires ne doivent pas s'étirer sur toute la largeur desktop — un champ de saisie à 1 200 px de large est illisible.
+
+#### Mobile — règles spécifiques
+
+- Ne pas tenter de conserver la mise en page tableau desktop.
+- Réduire l'information à l'essentiel : conserver les colonnes primaires, masquer les secondaires (`d-none d-md-table-cell`).
+- Utiliser `text-overflow: ellipsis` CSS pour les libellés longs — pas de troncature serveur pour des raisons responsive.
+- Min cible tactile : 44 × 44 px pour tout élément interactif (boutons, chevrons, cases à cocher).
+
 ---
 
 ## 6. Composants UI

@@ -1,5 +1,5 @@
 # decision-log.md
-updated: 2026-05-11 (ADR-015 icônes navigation)
+updated: 2026-05-11 (ADR-015 icônes navigation · ADR-016 largeur pages)
 managed_by: orchestrator_only
 format: ADR
 max_active_entries: 15
@@ -120,6 +120,16 @@ Décision :
 - **Interdiction absolue de suppressions massives** : lot par lot, domaine par domaine, tests visuels entre chaque passe.
 - **Ordre de priorité** : (a) raw hex / rem en dur → remplacer par tokens, (b) doublons exacts avec une primitive → supprimer, (c) aliases legacy → retirer une fois les consumers migrés, (d) overrides de radius → retirer per composant.
 Raison : `app.css` a 9k sélecteurs actifs. Une suppression massive sans audit visuel risque des régressions silencieuses sur des pages non testées. La déduplication progressive est la seule approche sûre.
+
+## ADR-016 — Doctrine de largeur des pages et cards
+Date : 2026-05-11
+Statut : Actif
+Décision : la largeur d'une card ou section est déterminée par l'usage utilisateur, selon trois archétypes :
+- **Opérationnel** (comptes, transactions, admin) → `col-12` / full-width — scanner, comparer, gérer.
+- **Analytique** (dashboard, patrimoine, cashflow) → full-width ou grille justifiée (`8/4`, `7/5`) — blocs complémentaires lus simultanément uniquement.
+- **Formulaire / paramètres / lecture** (profil, édition, légal) → largeur contrainte (`col-lg-8`, max-width 720–900 px) — préserver la lisibilité à la saisie.
+Raison : la page Comptes a posé la question d'une contrainte `col-lg-*` inutile. La décision a été généralisée en doctrine transverse pour éviter les incohérences futures de layout.
+Conséquences : la bible visuelle §5 "Largeur des sections par type de page" est la source doctrinale. Aucun audit global immédiat — les corrections sont appliquées page par page lors des futurs lots de polish.
 
 ## ADR-015 — Convention d'usage `chevron_right` / `arrow_forward`
 Date : 2026-05-11

@@ -54,6 +54,13 @@ Il ne remplace pas :
 
 Toute régression de pattern doit être signalée dans `RISKS`.
 
+### Largeur des pages (règle ADR-016 — source primaire : bible §5 "Largeur des sections par type de page")
+
+- Pages opérationnelles (comptes, transactions, admin) : `col-12` / full-width.
+- Pages analytiques (dashboard, patrimoine) : full-width ou grille justifiée — jamais colonne secondaire décorative.
+- Pages formulaire / paramètres / légales : `col-lg-8` ou `max-width` 720–900 px.
+- Mobile : masquer colonnes secondaires, `text-overflow: ellipsis`, cible tactile 44 × 44 px min.
+
 ### Icônes de navigation (règle ADR-015 — source primaire : bible §6.J)
 
 - `chevron_right` : colonne d'action de ligne (tableau / liste) ouvrant une fiche de détail interne.
