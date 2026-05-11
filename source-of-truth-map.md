@@ -1,5 +1,5 @@
 # Source of Truth Map — Budgex
-updated: 2026-03-24
+updated: 2026-05-11 (Lot 0A Sprint CSS)
 owner: budgex-orchestrator
 status: active
 
@@ -23,24 +23,31 @@ Objectif :
 
 | Sujet | Source primaire | Source secondaire autorisée | À ne pas dupliquer dans |
 |---|---|---|---|
+| Packaging / Pricing (arbitrages produit Free–Premium–Premium+) | `memory/product-pricing-spec.md` | `memory/decision-log.md` (ADR-008), `memory/project-context.md` (pointeur court) | `memory/roadmap.md`, agents, prompts |
+| Entitlements / Capabilities (architecture technique) | `memory/entitlements-spec.md` | `memory/product-pricing-spec.md` (source des arbitrages produit) | agents, prompts, controllers |
 | Rôles, périmètres et positionnement des agents | `agents/agents-catalog.md` | `playbooks/agent-team-playbook.md` | prompts spécialistes |
 | Comportement détaillé de l’orchestrateur | `agents/budgex-orchestrator.md` | `agents/agents-catalog.md` | `playbooks/agent-team-playbook.md` |
 | Comportement détaillé d’un agent spécialisé | `agents/<agent>.md` | `agents/agents-catalog.md` | `playbooks/agent-team-playbook.md`, autres prompts agents |
 | Routing global entre agents | `agents/agents-catalog.md` | `agents/budgex-orchestrator.md` | prompts spécialistes, `memory/active-focus.md` |
 | Sélection opérationnelle du mode `NO_DELEGATE / SINGLE_STREAM / MULTI_STREAM` | `agents/budgex-orchestrator.md` | aucune | `agents/agents-catalog.md`, prompts spécialistes |
 | Profils `fast/safe/deep` | `memory/execution-profiles.md` | `playbooks/agent-team-playbook.md` | prompts spécialistes |
-| Standards de code / UI / conventions projet | `memory/engineering-standards.md` | checklists | `memory/project-context.md`, prompts |
+| Standards de code / conventions projet (PHP, Git, structure, règles frontend non-design) | `memory/engineering-standards.md` | checklists | `memory/project-context.md`, prompts — ⚠ pour la doctrine design system, voir `references/budgex-visual-bible.md` |
 | Guardrails d'erreurs | `memory/error-guardrails.md` | checklists, hooks | `memory/decision-log.md`, prompts |
 | Stack produit, baseline projet, baseline QA | `memory/project-context.md` | checklists QA, `references/reference-pack-core.md` | `memory/active-focus.md`, prompts |
 | Priorités actives court terme | `memory/active-focus.md` | `memory/open-risks.md` | `memory/project-context.md`, `memory/decision-log.md` |
 | Décisions d'architecture et arbitrages durables | `memory/decision-log.md` | `memory/project-context.md` si impact global stabilisé | `memory/user-directives.md`, prompts |
-| Directives utilisateur persistantes | `memory/user-directives.md` | aucune | `memory/decision-log.md`, prompts |
+| Directives utilisateur persistantes | `memory/user-directives.md` | aucune | `memory/decision-log.md`, prompts — ⚠ recréé 2026-05-11 (Lot 0A), ancien contenu archivé |
 | Risques ouverts et points de vigilance | `memory/open-risks.md` | `memory/active-focus.md`, rapports ops | `memory/project-context.md` |
 | Références techniques core | `references/reference-pack-core.md` | packs spécialisés | prompts |
 | Références techniques base de données | `references/reference-pack-database.md` | `references/reference-pack-core.md` | prompts |
 | Références techniques frontend | `references/reference-pack-frontend.md` | `references/reference-pack-core.md` | prompts |
 | Références techniques SEO | `references/reference-pack-seo.md` | `references/reference-pack-core.md` | prompts |
+| Doctrine visuelle & design system (tokens, layout, composants, règles UI) | `references/budgex-visual-bible.md` | `memory/engineering-standards.md` (règles intégration code uniquement) · `checklists/frontend-checklist.md` (application uniquement) | prompts agents, feuilles CSS métier, templates Twig — jamais redéfinir en local |
+| Références techniques billing Stripe | `references/reference-pack-billing.md` | `references/reference-pack-core.md` | prompts, `.env`, agents |
+| Secrets Stripe (noms de variables) | `references/reference-pack-billing.md` §Variables | aucune | `.env`, templates, prompts, commits |
+| Source documentaire Stripe | `references/reference-pack-billing.md` §Source | aucune | partout — https://docs.stripe.com/ uniquement |
 | Procédures d’équipe et workflow opératoire | `playbooks/agent-team-playbook.md` | aucune | prompts agents, `agents/agents-catalog.md` |
+| Répartition des tâches Claude ↔ Codex | `docs/codex/codex-claude-handoff.md` | `AGENTS.md` (résumé des rôles) | `.claude/memory/`, prompts agents |
 | Contrôles détaillés par spécialité | `checklists/<specialty>-checklist.md` | `memory/engineering-standards.md`, `memory/error-guardrails.md` | prompts agents, `memory/project-context.md` |
 | Rôle et responsabilité des hooks | `CLAUDE.md` | scripts hooks eux-mêmes | prompts agents, `memory/decision-log.md` |
 | Protocole d’évaluation | `evals/README.md` | `ops/reports/` | prompts agents, `memory/project-context.md` |
