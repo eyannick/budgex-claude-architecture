@@ -361,11 +361,30 @@ Voir Section 5.
 | Outline | Border `--bx-app-border-2` · texte `--bx-app-accent-on` · hover fond `--bx-app-accent-tint` |
 | Info (cyan) | Fond `--bx-app-info-tint` · texte `#67e8f9` |
 | Ghost | Transparent · texte `--bx-app-fg-2` · hover `--bx-app-hover` |
-| Danger | Transparent · texte `--bx-app-danger` · border 1 px `rgba(248,113,113,0.4)` · hover tint — **jamais filled rouge plein** |
+| Danger outline | Transparent · texte `--bx-app-danger` · border 1 px `rgba(248,113,113,0.4)` · hover `--bx-app-danger-tint` + border plein `--bx-app-danger` |
+| Danger filled | Fond `--bx-app-danger` · texte #fff · shadow `rgba(248,113,113,0.28)` · hover `#ef4444` + translateY(-1px) — **confirmation finale uniquement** |
 | Icon-only | 36 × 36 px circle · ghost · hover `--bx-app-hover` |
 | Taille SM | Padding 6 / 12 px · 12.5 px · radius `--bx-radius` (8 px) |
 | Disabled | Opacity 0.45 · cursor not-allowed · pas d'ombre · pas de transform |
 | Focus | Outline 2 px `--bx-app-focus-ring`, offset 1 px |
+
+**Règles sémantiques danger — ADR-017**
+
+| Variant | Usage autorisé | Usage interdit |
+|---|---|---|
+| Danger outline | Déclencheur visible sur page principale · bouton ouvrant une modale de confirmation · action sensible mais annulable | Confirmation finale destructive |
+| Danger filled | Confirmation finale destructive dans modale ("Supprimer définitivement", "Confirmer la suppression", "Révoquer") | CTA permanent sur page principale |
+| Annuler / retour | `.bx-btn-outline-app` neutre — jamais rouge | Toute couleur danger |
+
+Exemples corrects :
+- "Désactiver la 2FA" (trigger page) → danger outline
+- "Annuler l'abonnement" (trigger page) → danger outline
+- "Supprimer mon compte" visible sur profil → danger outline
+- "Confirmer la suppression" dans modale → danger filled
+- "Révoquer toutes les sessions" dans modale → danger filled
+- "Annuler" (modal ou formulaire) → `.bx-btn-outline-app` neutre
+
+**Règle d'intensité :** une page principale ne doit jamais afficher plusieurs boutons rouge filled simultanément. Le rouge filled est réservé au moment unique de confirmation finale. Le danger outline prépare l'utilisateur sans dramatiser l'interface.
 
 ### F · Badges & pills
 
@@ -560,7 +579,7 @@ Budgex est conçu desktop-first mais reste pleinement utilisable sur tablette et
 - Mélanger violet, bleu et rose comme couleurs décoratives.
 - Mettre des bordures verticales dans les tableaux.
 - Créer une page sans header standard.
-- Utiliser un rouge filled pour un bouton danger.
+- Utiliser un rouge filled pour un bouton danger visible en permanence sur une page principale (rouge filled réservé aux modales de confirmation finale — ADR-017).
 - Mettre du texte en couleur sans signification (vert = succès uniquement).
 - Multiplier les pills sur une même ligne (≥ 4).
 - Ajouter une 3ᵉ famille de police.

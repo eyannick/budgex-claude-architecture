@@ -1,5 +1,5 @@
 # engineering-standards.md
-updated: 2026-05-11
+updated: 2026-05-11 (ADR-017 boutons danger ajoutée)
 status: active
 
 ## Rôle du document
@@ -66,6 +66,13 @@ Toute régression de pattern doit être signalée dans `RISKS`.
 - `chevron_right` : colonne d'action de ligne (tableau / liste) ouvrant une fiche de détail interne.
 - `arrow_forward` : CTA autonome, lien "Tout voir", lien de section, navigation inter-espaces.
 - La classe `.bx-row-arrow` est un wrapper de colonne (28 px) — l'icône à l'intérieur doit être `chevron_right`.
+
+### Boutons danger (règle ADR-017 — source primaire : bible §6.E)
+
+- **Danger outline** → `.bx-btn-outline-app.bx-btn-outline-app--danger` : déclencheur page principale, trigger modale, action sensible mais annulable.
+- **Danger filled** → `.bx-btn-danger-app` : confirmation finale destructive dans modale uniquement. Interdit comme CTA permanent.
+- **Annuler** → `.bx-btn-outline-app` neutre, jamais rouge.
+- Règle d'intensité : jamais plusieurs rouge filled visibles simultanément sur une même page.
 
 ## Design System (officiel 2026-04-19)
 

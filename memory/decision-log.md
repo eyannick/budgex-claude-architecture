@@ -1,8 +1,8 @@
 # decision-log.md
-updated: 2026-05-11 (ADR-006 archivée · ordre ADR-009/015/016 corrigé)
+updated: 2026-05-11 (ADR-006 archivée · ordre ADR-009/015/016 corrigé · ADR-017 boutons danger ajoutée)
 managed_by: orchestrator_only
 format: ADR
-max_active_entries: 15
+max_active_entries: 16
 status: active
 
 ## Rôle du document
@@ -144,6 +144,20 @@ Décision : la largeur d'une card ou section est déterminée par l'usage utilis
 - **Formulaire / paramètres / lecture** (profil, édition, légal) → largeur contrainte (`col-lg-8`, max-width 720–900 px) — préserver la lisibilité à la saisie.
 Raison : la page Comptes a posé la question d'une contrainte `col-lg-*` inutile. La décision a été généralisée en doctrine transverse pour éviter les incohérences futures de layout.
 Conséquences : la bible visuelle §5 "Largeur des sections par type de page" est la source doctrinale. Aucun audit global immédiat — les corrections sont appliquées page par page lors des futurs lots de polish.
+
+## ADR-017 — Doctrine sémantique des boutons danger
+Date : 2026-05-11
+Statut : Actif
+Décision : deux variants danger coexistent avec des sémantiques strictement distinctes.
+- **Danger outline** (`.bx-btn-outline-app--danger`) : déclencheur visible sur page principale, bouton ouvrant une modale de confirmation, action sensible mais annulable.
+- **Danger filled** (`.bx-btn-danger-app`) : confirmation finale destructive uniquement, principalement dans des modales. Interdit comme CTA permanent sur une page principale.
+- **Annuler** : toujours neutre (`.bx-btn-outline-app`), jamais rouge.
+- **Règle d'intensité** : une page principale ne doit pas afficher plusieurs boutons rouge filled simultanément.
+Raison : la bible visuelle §6.E interdisait initialement tout rouge filled ("jamais filled rouge plein"). Cette interdiction visait les CTA de page, mais bloquait la création d'un bouton de confirmation destructive dark-first cohérent. La règle a été levée pour les modales de confirmation uniquement.
+Conséquences :
+- La bible visuelle §6.E est la source doctrinale de cette règle (mise à jour 2026-05-11).
+- Les primitives CSS `.bx-btn-danger-app` et `.bx-btn-outline-app--danger` sont autorisées dans `components.css`.
+- Aucune primitive danger filled ne doit être utilisée hors contexte de confirmation finale.
 
 ---
 
