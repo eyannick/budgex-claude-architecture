@@ -1,5 +1,5 @@
 # decision-log.md
-updated: 2026-05-11
+updated: 2026-05-11 (ADR-015 icônes navigation)
 managed_by: orchestrator_only
 format: ADR
 max_active_entries: 15
@@ -120,6 +120,19 @@ Décision :
 - **Interdiction absolue de suppressions massives** : lot par lot, domaine par domaine, tests visuels entre chaque passe.
 - **Ordre de priorité** : (a) raw hex / rem en dur → remplacer par tokens, (b) doublons exacts avec une primitive → supprimer, (c) aliases legacy → retirer une fois les consumers migrés, (d) overrides de radius → retirer per composant.
 Raison : `app.css` a 9k sélecteurs actifs. Une suppression massive sans audit visuel risque des régressions silencieuses sur des pages non testées. La déduplication progressive est la seule approche sûre.
+
+## ADR-015 — Convention d'usage `chevron_right` / `arrow_forward`
+Date : 2026-05-11
+Statut : Actif
+Décision : deux icônes Material Icons ont des rôles sémantiques distincts et non interchangeables.
+- `chevron_right` : ligne de tableau, ligne de liste, item ouvrant une fiche de détail dans la même hiérarchie.
+- `arrow_forward` : CTA autonome, lien "Tout voir", lien de section, action qui quitte la vue courante.
+Raison : le lot Accounts-Polish v1 a remplacé `arrow_forward` par `chevron_right` dans la liste des comptes. Cette décision a été généralisée en règle transverse pour éviter les incohérences futures.
+Conséquences :
+- La bible visuelle §6.J est la source doctrinale de cette règle.
+- Les templates Patrimoine (× 7) et `admin/user/index.html.twig` constituent une dette connue à migrer en lot dédié.
+- La classe `.bx-row-arrow` reste valide (wrapper de colonne) ; seule l'icône intérieure change.
+- Le commentaire CSS `patrimoine.css:221` devra être corrigé lors du lot de migration.
 
 ## ADR-009 — Claude comme orchestrateur documentaire du périmètre pricing / packaging
 Date : 2026-04-25
