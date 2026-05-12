@@ -386,6 +386,20 @@ Exemples corrects :
 
 **Règle d'intensité :** une page principale ne doit jamais afficher plusieurs boutons rouge filled simultanément. Le rouge filled est réservé au moment unique de confirmation finale. Le danger outline prépare l'utilisateur sans dramatiser l'interface.
 
+**Items danger dans les menus déroulants**
+
+Deux variantes coexistent selon le contexte du dropdown :
+
+| Variante | Repos | Hover | Contexte de référence |
+|---|---|---|---|
+| Danger permanent | Texte `--bx-app-danger` · icône `--bx-app-danger` | Fond `--bx-app-danger-tint` · texte et icône `--bx-app-danger` | Action dont la nature destructive est le seul sens possible, par exemple supprimer une transaction dans le menu de ligne |
+| Danger différé | Texte `--bx-app-fg-2` · icône `--bx-app-fg-3` | Fond `--bx-app-danger-tint` · texte `--bx-app-danger` · icône `--bx-app-danger` | Dropdown mixte regroupant des actions de natures différentes, par exemple éditer / supprimer une règle automatique |
+
+**Règles fixes :**
+- Le fond au hover est toujours `--bx-app-danger-tint` — jamais un rouge plein.
+- La variante danger permanent s'applique uniquement si tous les items du dropdown portent la même intention destructive ou critique. Si le menu regroupe des actions mixtes, utiliser la variante danger différé.
+- Ne jamais utiliser `background: var(--bx-app-danger)` dans un dropdown, y compris pour une action de confirmation. La confirmation finale doit passer par une modale avec bouton danger filled conformément à ADR-017.
+
 ### F · Badges & pills
 
 États autorisés : `actif` · `exclu` · `premium` · `à venir` · `warning` · `danger` · `success` · `info` · `counter` · `cat-{*}`.
