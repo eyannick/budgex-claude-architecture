@@ -395,12 +395,13 @@ Ce sprint est terminé lorsque toutes les conditions suivantes sont remplies :
 
 ---
 
-### Items Phase 24 encore à faire (à planifier hors sprints Powens)
+### Items Phase 24 — état courant
 
-- [ ] Impersonation ROLE_SUPER_ADMIN
-- [ ] Codes de secours 2FA
-- [ ] Appareils de confiance (scheb/2fa-trusted-device)
-- [ ] Politique de mot de passe (historique 5 derniers)
+- [x] Impersonation ROLE_SUPER_ADMIN — P24-3 ✅ 2026-05-22 · SwitchUserVoter (CAN_SWITCH_USER), SwitchUserSubscriber, bandeau app layout, bouton admin/user/show, SecurityEvent impersonation_start/end · commit c06f7c0
+- [x] Codes de secours 2FA — livré dans lot P-S-8C-6 (mai 2026)
+- [x] Appareils de confiance — P24-2A ✅ 2026-05-22 · infra (trusted_token_version, révocation globale, TrustedDeviceInterface) · commit 028677a · P24-2B ✅ 2026-05-22 · entity/listing/révocation unitaire · commit 054f6a7
+- [x] Politique de mot de passe (historique 5 derniers) — P24-4 ✅ P24-4A 2026-05-23 · infrastructure PasswordHistory · commit af72075 · P24-4B 2026-05-23 · intégration changement/réinitialisation · commit 78c0327
+- [x] Phase 24 — Sécurité avancée techniquement clôturée · 5 commits · aucune dette technique Phase 24 identifiée
 
 ---
 

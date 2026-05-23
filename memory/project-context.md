@@ -1,5 +1,5 @@
 # project-context.md
-updated: 2026-03-24
+updated: 2026-05-23
 managed_by: orchestrator_only
 status: active
 
@@ -39,6 +39,16 @@ Budgex est une application de gestion financière personnelle et patrimoniale av
 - isolation stricte des données par utilisateur ;
 - admin panel complet : audit, analytics, logs erreurs, GeoIP.
 
+## Modèle d'offre
+
+Budgex est organisé autour d'une offre Free / Premium / Premium+.
+**Mental model :** Free = je gère · Premium = j'automatise · Premium+ = je pilote / j'optimise.
+
+> La spécification complète de l'offre, des entitlements et de la logique de monétisation vit exclusivement dans :
+> **`memory/product-pricing-spec.md`** (source de vérité — ADR-008)
+>
+> Ne pas dupliquer ni redéfinir ces arbitrages dans d'autres fichiers `.claude`.
+
 ## Architecture applicative
 
 - pattern principal : MVC Symfony ;
@@ -63,9 +73,11 @@ Budgex est une application de gestion financière personnelle et patrimoniale av
 
 | Métrique | Valeur | Date |
 |---|---|---|
-| Tests PHPUnit | 328 tests | 2026-03-24 |
-| Assertions | 903 assertions | 2026-03-24 |
-| Failures | 0 | 2026-03-24 |
+| Tests PHPUnit | 919 tests | 2026-05-23 |
+| Assertions | 3374 assertions | 2026-05-23 |
+| Failures | 0 | 2026-05-23 |
+| Errors | 0 | 2026-05-23 |
+| PHPUnit Notices | 13 (pré-existants) | 2026-05-23 |
 
 Cette baseline est la seule valeur de référence officielle tant qu'un run QA validé ne l'a pas remplacée.
 
@@ -74,7 +86,11 @@ Cette baseline est la seule valeur de référence officielle tant qu'un run QA v
 Account, User, BankConnection, Transaction, Category, Libelle, Budget, Goal, GoalContribution,
 PowensConnector, PowensAccountStaging, CryptoHolding, PreciousMetalHolding, SavingProductReference,
 Currency, Notification, AdminLog, LoginHistory, AppErrorLog, RegistrationAttempt,
-RegistrationErrorLog, SiteConfig.
+RegistrationErrorLog, SiteConfig, LegalConfig, Subscription, UserCapabilityOverride,
+Property, PropertyLoan, InvestmentHolding, MarketOrder, InvestmentPocket.
+
+> **LegalConfig** (P-UI-Legal-4L · 2026-05-18) : source d'affichage des mentions légales et du prix Premium affiché.
+> Gérée via `/admin/legal-settings`. Stripe reste la source du montant débité (ADR-019).
 
 ## Services Powens (`src/Service/Powens/`)
 
