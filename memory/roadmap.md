@@ -1,5 +1,5 @@
 # roadmap.md
-updated: 2026-05-11
+updated: 2026-05-29
 version: V3
 
 Roadmap produit et technique Budgex — historique complet + plan actif.
@@ -402,6 +402,62 @@ Ce sprint est terminé lorsque toutes les conditions suivantes sont remplies :
 - [x] Appareils de confiance — P24-2A ✅ 2026-05-22 · infra (trusted_token_version, révocation globale, TrustedDeviceInterface) · commit 028677a · P24-2B ✅ 2026-05-22 · entity/listing/révocation unitaire · commit 054f6a7
 - [x] Politique de mot de passe (historique 5 derniers) — P24-4 ✅ P24-4A 2026-05-23 · infrastructure PasswordHistory · commit af72075 · P24-4B 2026-05-23 · intégration changement/réinitialisation · commit 78c0327
 - [x] Phase 24 — Sécurité avancée techniquement clôturée · 5 commits · aucune dette technique Phase 24 identifiée
+
+---
+
+### Phase 25 — Immobilier
+
+Objectif : module immobilier complet dans la vision patrimoniale. CRUD, valorisation nette, crédits, insights Finary-like.
+
+Prérequis satisfaits : entités `Property` + `PropertyLoan`, `PropertyValuationService`, `PropertyLoanSummaryService`, templates CRUD, intégration `PatrimoineController` (net worth + donut + chart).
+
+#### P25-0 — Hardening & tests ✅ COMPLÉTÉ (2026-05-23)
+
+- [x] Tests PropertyController, PropertyValuationService, PropertyLoanSummaryService
+- [x] Correction audit logs property.created/updated/deleted
+- Commit `391043c` · working tree propre
+
+#### P25-1 — Indicateur plus-value latente ✅ COMPLÉTÉ (2026-05-23)
+
+- [x] `PropertyValuationService::getPropertySnapshot()` : purchasePrice, latentGain, latentGainPercent
+- [x] `immobilier_show.html.twig` : prix d'acquisition + pill +/−% latente
+- [x] `PropertyValuationServiceTest` : clés du snapshot couvertes
+- Commit `603fda9` · 0 migration · 3 fichiers
+
+#### P25-2 — Date de fin de prêt et mensualités restantes ✅ COMPLÉTÉ (2026-05-23)
+
+- [x] `PropertyValuationService::getPropertySnapshot()` : loanEndDate, loanRemainingMonths
+- [x] `immobilier_show.html.twig` : date de fin + mensualités restantes + progress bar + fix netValue color
+- [x] `PropertyValuationServiceTest` : prêt actif, prêt échu, sans prêt
+- Commit `3c50bc3` · 0 migration · 3 fichiers
+
+#### P25-3 — Indicateur de performance dans la liste immobilier ✅ COMPLÉTÉ (2026-05-23)
+
+- [x] `immobilier.html.twig` : gain%/perte% coloré dans le sous-titre de chaque bien (type · part · +X%)
+- [x] `PropertyControllerTest` : assertion smoke gain% sur la liste
+- Commit `4d2e808` · 0 migration · 2 fichiers
+
+#### P25-4 — Bilan visuel brut / dette / net dans la fiche synthèse · à planifier
+
+- [ ] `immobilier_show.html.twig` : strip 3-KPI (Valeur brute | Dette restante | Valeur nette) en bas de la carte Synthèse, conditionnel sur `snapshot.hasLoan`
+- [ ] Données déjà dans snapshot (ownedGrossValue, remainingDebt, netValue) — aucun service, aucune migration
+- [ ] `PropertyControllerTest` : assertion smoke que le strip apparaît sur la fiche d'un bien avec prêt
+- 1 template + 1 test · risque quasi-zéro
+
+---
+
+### Chantier transversal — UX Transactions · P2 ✅ CLÔTURÉ (2026-05-29)
+
+**Statut :** Clôturé · audit final PASS · 10 commits (1eab416→0e013ef)
+**Type :** UX polish, responsive mobile, harmonisation wording
+
+- [x] Desktop table : readability, inline styles retirés, icônes flux ronds, couleurs sémantiques montants
+- [x] Mobile : cards dédiées `bx-tx-mobile-card` (d-sm-none) dans `td.bx-tx-col-label`, kebab `data-bs-display="static"` + overflow panel corrigé
+- [x] Files d'action distinctes : bandeau signal deux files (catégoriser / valider), /app/a-traiter KPIs restructurés (plus de total abstrait)
+- [x] Wording utilisateur harmonisé sur toutes surfaces : Valider / Validée / À valider / Annuler la validation
+- [x] Dashboard, Budget analyse, Cashflow alignés avec la doctrine
+
+**Doctrine retenue — ADR-026 :** ne pas exposer un total technique d'union dédupliquée quand les motifs peuvent se chevaucher. Afficher des files d'action séparées, nommées par un verbe d'action. S'applique à tout futur module Budgex exposant des compteurs multi-motifs.
 
 ---
 
