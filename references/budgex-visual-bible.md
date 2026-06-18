@@ -468,6 +468,24 @@ Règle fixée lors du lot Accounts-Polish v1 (2026-05-11). **ADR-015.**
 | Erreur | Border `rgba(248,113,113,0.55)` · message 12 px couleur `--bx-app-danger` |
 | Disabled | Fond `--bx-app-inset` · opacity 0.55 · cursor not-allowed |
 
+### K · États vides
+
+> Doctrine transversale — généralise le principe directeur §2.07 (« États systématiques ») et
+> remplace les implémentations locales dispersées (Budget, Patrimoine, Tableaux §8.8).
+> Aucun composant technique n'est imposé ici — application au cas par cas avec les primitives
+> existantes (`.bx-card`, `.bx-notice`, `.bx-pill`).
+
+- **Message clair** : une phrase, sens immédiat (« Aucune transaction ce mois-ci »), pas de jargon technique.
+- **Ton sobre** : pas d'humour ni de tournure enjouée artificielle — cohérent avec le ton financier de l'app.
+- **Icône optionnelle mais non décorative** : si présente, elle illustre le contenu absent (ex. tableau vide → icône liste), jamais un simple remplissage visuel.
+- **Action principale si utile** : un seul CTA primaire quand une action résout l'état vide (« Ajouter un compte »). Pas de CTA si l'état vide est terminal (ex. aucune dette ce mois).
+- **Pas de bloc massif** : l'état vide occupe l'espace du contenu absent, jamais une pleine page ni un encart disproportionné par rapport au composant qu'il remplace.
+- **Cohérence dark-first** : couleurs via tokens (`--bx-app-fg-2/3`, `--bx-app-surface-2`), jamais de gris brut ou de blanc cassé hors token.
+- **Adapté mobile** : centré, lisible sans scroll horizontal, CTA pleine largeur ou ≥ 44 px si présent.
+- **Ne jamais masquer une erreur technique sous un état vide** : une erreur de chargement, de sync ou d'API affiche son propre état d'erreur (`.bx-notice notice-danger` ou équivalent) — un état vide signifie « rien à afficher », pas « le chargement a échoué ».
+- **Tables** : état vide rendu *dans* la zone de contenu du tableau (cf. §8.8), pas en remplacement de toute la page.
+- **Cards / accordéons** : état vide compact — un message + icône optionnelle dans le corps de la card, sans gonfler sa hauteur standard (§6.D).
+
 ---
 
 ## 7. Règles pour les graphiques
@@ -537,10 +555,13 @@ Ces valeurs correspondent aux tokens `--bx-app-accent`, `--bx-app-info`, `--bx-a
 
 ## 9. Règles pour les alertes & toasts
 
+> **Couche technique (implémentation Symfony, aria, noscript, API JS, tests de garde)** → `references/budgex-flash-toast-doctrine.md`
+> Ce §9 reste la source primaire pour les règles **visuelles et UX** des alertes & toasts.
+
 - **4 niveaux uniquement** : success · info · warning · danger.
 - **Structure obligatoire** : icône sémantique + titre gras + sous-texte + (optionnel) action droite.
 - **Icônes** : `check_circle` · `info` · `priority_high` · `error`.
-- **Position** : inline dans la page (au-dessus du contenu lié) *ou* toast bottom-right.
+- **Position** : inline dans la page (au-dessus du contenu lié) *ou* toast top-right.
 - **Pas de full-page modal** pour une alerte, sauf erreur critique (paiement, perte de données).
 - **Durée toast** : 5 s par défaut, sticky pour danger.
 - **Empilement** : 2 toasts max visibles, gap 12 px, retrait FIFO.
@@ -605,7 +626,7 @@ Budgex est conçu desktop-first mais reste pleinement utilisable sur tablette et
 
 ## 12. Checklist de validation d'une nouvelle page
 
-Une page Budgex n'est pas livrable tant que les 14 points ci-dessous ne sont pas cochés.
+Une page Budgex n'est pas livrable tant que les 15 points ci-dessous ne sont pas cochés.
 
 - [ ] Header standard présent (eyebrow + H1 + sous-titre, back rond si détail)
 - [ ] Aucun raw hex / rem (tout via `--bx-app-*` / `--bx-sp-*` / `--bx-radius-*`)
@@ -621,6 +642,7 @@ Une page Budgex n'est pas livrable tant que les 14 points ci-dessous ne sont pas
 - [ ] Focus visible (outline 2 px `--bx-app-focus-ring`)
 - [ ] Texte minimum 12 px (aucune lecture courante en dessous)
 - [ ] Pas de troisième famille typo (Roboto + Roboto Mono uniquement)
+- [ ] Origine CSS vérifiée (ADR-020) : toute classe réutilisée est définie dans un fichier chargé sur le layout cible ; si module-locale → promue dans `components.css` avant usage hors module
 
 ---
 
@@ -628,13 +650,19 @@ Une page Budgex n'est pas livrable tant que les 14 points ci-dessous ne sont pas
 
 Ce design system existe déjà dans `colors_and_type.css` et `components.css`. Les recommandations ci-dessous visent à le faire respecter durablement.
 
-### Hiérarchie des feuilles de style
+### Hiérarchie des feuilles de style (L0–L6 · CSS-7B · 2026-05-19)
 
-1. `colors_and_type.css` — source de vérité des tokens. Aucun raw hex hors de ce fichier.
-2. `styles.css` — reset / base.
-3. `app.css` — typographie sémantique.
-4. `components.css` — primitives `.bx-*`. Chargé en dernier, pas d'`!important` sauf override Bootstrap.
-5. Feuilles métier (`accounts.css`, `patrimoine.css`, `cashflow.css`) — overrides locaux uniquement, jamais de nouveau token.
+> Référence technique opérationnelle complète : `memory/engineering-standards.md` §Architecture CSS officielle (ADR-022).
+
+| Couche | Fichier(s) | Rôle |
+|---|---|---|
+| **L0 — Tokens** | `colors_and_type.css` | Source de vérité unique — hex, rem, radii, shadows, motion |
+| **L1 — Vendor** | `styles.css` | Reset / base Bootstrap — ne jamais enrichir |
+| **L2 — Transition** | `app.css` | Legacy / transition — à drainer lot par lot (ADR-014) |
+| **L3 — Primitives** | `components.css` | Primitives `.bx-*` app/admin — chargé sur `base.html.twig` et `base_admin.html.twig` uniquement |
+| **L4 — Modules** | `profile.css` · `transactions.css` · `accounts.css` · `dashboard.css` · `cashflow.css` · `patrimoine.css` · `goal.css` | Module-local — ne pas réutiliser hors module sans promotion dans L3 |
+| **L5 — Zones publiques** | `landing.css` · `legal.css` | Autonomes — hors zone app/admin, indépendantes de `components.css` |
+| **L6 — Page-specific** | block stylesheets Twig | Exceptionnel uniquement — aucun token défini ici |
 
 ### Règles de code
 
@@ -646,6 +674,7 @@ Ce design system existe déjà dans `colors_and_type.css` et `components.css`. L
 - **Twig** : créer un partial pour chaque composant récurrent (`_app_page_header.html.twig`, `_bx_kpi.html.twig`, `_bx_alert.html.twig`) et l'utiliser systématiquement.
 - **Light theme** : opt-in via `html[data-theme="light"]`. Aucune CSS métier ne doit forcer une couleur claire.
 - **Linting** : un script (`bin/console design:lint` ou équivalent) doit scanner les feuilles métier pour détecter raw hex / rem, et faire échouer la CI si trouvé.
+- **Origine des classes CSS** (ADR-020 — source primaire : `memory/engineering-standards.md §Origine CSS et réutilisation des classes`) : avant de réutiliser une classe hors de son module d'origine, vérifier son fichier de définition, son chargement sur le layout cible, et son statut canonique ou module-local. Si généralisable → promouvoir dans `components.css`. Jamais de style inline de substitution ni de copie de classe sans vérifier le chargement CSS.
 
 ### Stratégie d'introduction sur du code existant
 
@@ -788,6 +817,27 @@ Incohérences identifiées entre la bible visuelle et le code CSS réel (`colors
 **Correction appliquée** : Section 3.G ajoutée dans cette bible avec les trois tokens.
 
 **Statut** : résolu dans cette version.
+
+---
+
+### B.6 · État d'implémentation — Sprint CSS V1 (2026-05-19)
+
+**Statut** : Sprint CSS V1 clôturé.
+
+**`components.css`** : clos pour V1. Primitives `.bx-*` complètes, flags `!important` redondants retirés, token gaps comblés.
+
+**`app.css`** : sécurisé sur les familles safe-to-replace uniquement (couleurs app, bordures, surfaces, inline styles sûrs). Les remplacements ci-dessous sont différés.
+
+**Dettes CSS différées** (hors V1 — à traiter lot par lot, ADR-021) :
+- `#fff` foreground en dur → `var(--bx-app-fg)`
+- `#111827` admin → token dédié
+- Valeurs unitaires (rem/px) → `var(--bx-sp-N)` / `var(--bx-radius-*)`
+- Inline styles JS-dépendants (conservés intentionnellement)
+- Inline styles admin/home/email
+- `app.css` legacy/doublons (ADR-014)
+- Sélecteurs `bx-tx-*` transversaux
+
+**Règle** : tout futur lot CSS doit rester ciblé. ADR-020 + ADR-014 obligatoires. Pas de drainage massif de `app.css`.
 
 ---
 
